@@ -1,0 +1,8 @@
+name: ReservationDown
+version: '${version}'
+main: org.example.pluhin.reservationdown.ReservationDown
+api-version: '1.20'
+commands:
+  shutdown:
+    description: 서버의 종료시간를 예약할 수 있습니다.
+    usage: /shutdown <set|remove|check> <Hour|minute|second> <time>
