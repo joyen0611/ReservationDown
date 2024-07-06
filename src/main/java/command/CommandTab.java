@@ -3,6 +3,7 @@ package command;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,14 +17,16 @@ public class CommandTab implements TabCompleter {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 1) {
+        if (!sender.isOp()) {
+            return Arrays.asList("check");
+        }if (args.length == 1) {
             return getMatchingArgs(args[0], FIRST_ARGS);
         }else if (args.length == 2 && args[0].equals("set")) {
             return getMatchingArgs(args[1], SET_ARGS);
         }else if (args.length == 3 && args[0].equals("set")) {
-            return new ArrayList<>();
+            return List.of("<time>");
         }
-        return null;
+        return new ArrayList<>();
     }
     private List<String> getMatchingArgs(String arg, List<String> options) {
         List<String> result = new ArrayList<>();

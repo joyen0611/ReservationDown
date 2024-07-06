@@ -22,13 +22,15 @@ public class CommandHandler implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (args.length == 0) return false;
         if (args[0].equals("check")) return check(sender);
-        if (!(sender instanceof Player) || !sender.isOp()) {
+        if (!sender.isOp()) {
             sender.sendMessage("This command can only be used by operators.");
             return true;
         }
-        if (args[0].equals("set")) return set(sender, args[1], Integer.valueOf(args[2]));
+
         if (args[0].equals("remove")) return remove(sender);
+        if (args[0].equals("set") && args.length > 1) return set(sender, args[1], Integer.valueOf(args[2]));
         return false;
     }
     public boolean set(CommandSender sender, String unit, Integer time) {
@@ -83,6 +85,7 @@ public class CommandHandler implements CommandExecutor {
     public boolean check(CommandSender sender) {
         if (second == null) {
             sender.sendMessage("예약된 종료작업이 없습니다!");
+            return true;
         }
         sender.sendMessage(SecondsToTime(second.get()));
         return true;
